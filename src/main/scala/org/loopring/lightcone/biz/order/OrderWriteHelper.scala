@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.biz.database.entity
+package org.loopring.lightcone.biz.order
 
-import org.loopring.lightcone.biz.database.base.BaseEntity
+import org.loopring.lightcone.biz.enum.MarketSide.MarketSide
+import org.loopring.lightcone.biz.model.{ Order, SoftCancelSign }
 
-case class OrderChangeLogEntity(
-    id: Long = 0,
-    updatedAt: Long = 0,
-    createdAt: Long = 0,
-    preChangeId: Long = 0,
-    orderHash: String = "",
-    dealtAmountS: String = "",
-    dealtAmountB: String = "",
-    cancelledAmountS: String = "",
-    cancelledAmountB: String = "",
-    status: String = "",
-    updatedBlock: Long = 0
-) extends BaseEntity
-
+trait OrderWriteHelper {
+  def generateHash(order: Order): String
+  def fillInOrder(order: Order): Order
+  def validateOrder(order: Order): ValidateResult
+  def isOrderExist(order: Order): Boolean
+  def getMarket(order: Order): String
+  def getSide(order: Order): MarketSide
+  def getPrice(order: Order): Double
+  def validateSoftCancelSign(optSign: Option[SoftCancelSign]): ValidateResult
+}

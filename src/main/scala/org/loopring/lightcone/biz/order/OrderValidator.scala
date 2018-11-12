@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.biz.database.entity
+package org.loopring.lightcone.biz.order
 
-import org.loopring.lightcone.biz.database.base.BaseEntity
+import org.loopring.lightcone.biz.model.Order
 
-case class OrderChangeLogEntity(
-    id: Long = 0,
-    updatedAt: Long = 0,
-    createdAt: Long = 0,
-    preChangeId: Long = 0,
-    orderHash: String = "",
-    dealtAmountS: String = "",
-    dealtAmountB: String = "",
-    cancelledAmountS: String = "",
-    cancelledAmountB: String = "",
-    status: String = "",
-    updatedBlock: Long = 0
-) extends BaseEntity
+case class ValidateResult(pass: Boolean = false, rejectReason: String = "")
 
+trait OrderValidator {
+  def validate(order: Order): ValidateResult
+}

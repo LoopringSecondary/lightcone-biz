@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.biz.database.entity
+package org.loopring.lightcone.biz.enum
 
-import org.loopring.lightcone.biz.database.base.BaseEntity
+object OrderStatus extends Enumeration {
+  type OrderStatus = Value
 
-case class OrderChangeLogEntity(
-    id: Long = 0,
-    updatedAt: Long = 0,
-    createdAt: Long = 0,
-    preChangeId: Long = 0,
-    orderHash: String = "",
-    dealtAmountS: String = "",
-    dealtAmountB: String = "",
-    cancelledAmountS: String = "",
-    cancelledAmountB: String = "",
-    status: String = "",
-    updatedBlock: Long = 0
-) extends BaseEntity
-
+  val NEW = Value
+  val PENDING = Value
+  val EXPIRED = Value
+  val COMPLETELY_FILLED = Value // 完全成交
+  val CANCELLED_BY_USER = Value
+  val CANCELLED_LOW_BALANCE = Value
+  val CANCELLED_LOW_FEE_BALANCE = Value
+  val CANCELLED_TOO_MANY_ORDERS = Value
+  val CANCELLED_TOO_MANY_FAILED_SETTLEMENTS = Value
+}

@@ -41,7 +41,6 @@ case class OrderEntity(
                       sig : String,
                       dualAuthSig : String,
                       allOrNone : Boolean,
-
                       feeToken : String,
                       feeAmount : String,
                       feePercentage : Int,
@@ -51,9 +50,8 @@ case class OrderEntity(
                       tokenRecipient : String,
                       walletSplitPercentage : Int,
                       dualPrivateKey : String,
-                      orderHash : String,
+                      hash : String,
                       powNonce : Long,
-
                       updatedBlock : Long,
                       dealtAmountS : String,
                       dealtAmountB : String,

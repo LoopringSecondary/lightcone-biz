@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.biz.database.entity
+package org.loopring.lightcone.biz.enum
 
-import org.loopring.lightcone.biz.database.base.BaseEntity
+object SoftCancelType extends Enumeration {
+  type SoftCancelType = Value
+  val BY_HASH: SoftCancelType = Value
+  val BY_OWNER: SoftCancelType = Value
+  val BY_TIME: SoftCancelType = Value
+  val BY_MARKET: SoftCancelType = Value
 
-case class OrderChangeLogEntity(
-    id: Long = 0,
-    updatedAt: Long = 0,
-    createdAt: Long = 0,
-    preChangeId: Long = 0,
-    orderHash: String = "",
-    dealtAmountS: String = "",
-    dealtAmountB: String = "",
-    cancelledAmountS: String = "",
-    cancelledAmountB: String = "",
-    status: String = "",
-    updatedBlock: Long = 0
-) extends BaseEntity
-
+}

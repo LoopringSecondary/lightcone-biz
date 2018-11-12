@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.biz.database.entity
+package org.loopring.lightcone.biz.model
 
-import org.loopring.lightcone.biz.database.base.BaseEntity
-
-case class OrderChangeLogEntity(
-    id: Long = 0,
-    updatedAt: Long = 0,
-    createdAt: Long = 0,
-    preChangeId: Long = 0,
-    orderHash: String = "",
-    dealtAmountS: String = "",
-    dealtAmountB: String = "",
-    cancelledAmountS: String = "",
-    cancelledAmountB: String = "",
-    status: String = "",
-    updatedBlock: Long = 0
-) extends BaseEntity
-
+case class SoftCancelSign(timestamp: Long, v: Int, r: String, s: String, owner: String)

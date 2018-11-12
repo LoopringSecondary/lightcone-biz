@@ -71,7 +71,7 @@ class Orders(tag: Tag) extends BaseTable[OrderEntity](tag, "ORDERS") {
   def walletSplitPercentage = column[Int]("wallet_split_percentage")
 
   def dualPrivateKey = column[String]("dual_private_key", O.SqlType("VARCHAR(128)"))
-  def orderHash = column[String]("order_hash", O.SqlType("VARCHAR(128)"))
+  def hash = column[String]("order_hash", O.SqlType("VARCHAR(128)"))
 
   def powNonce = column[Long]("pow_nonce")
 
@@ -98,7 +98,7 @@ class Orders(tag: Tag) extends BaseTable[OrderEntity](tag, "ORDERS") {
 
   def orderType = column[String]("order_type", O.SqlType("VARCHAR(32)"))
 
-  def idx = index("idx_order_hash", orderHash, unique = true)
+  def idx = index("idx_order_hash", hash, unique = true)
 
   def * = (id ::
     updatedAt ::
@@ -131,7 +131,7 @@ class Orders(tag: Tag) extends BaseTable[OrderEntity](tag, "ORDERS") {
     tokenRecipient ::
     walletSplitPercentage ::
     dualPrivateKey ::
-    orderHash ::
+    hash ::
     powNonce ::
     updatedBlock ::
     dealtAmountS ::

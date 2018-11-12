@@ -20,30 +20,18 @@ import org.loopring.lightcone.biz.database.OrderDatabase
 import org.loopring.lightcone.biz.database.base._
 import org.loopring.lightcone.biz.database.entity.OrderEntity
 import org.loopring.lightcone.biz.database.tables._
+import org.loopring.lightcone.biz.enum.OrderStatus
 import slick.dbio.Effect
 import slick.jdbc.MySQLProfile.api._
 import slick.sql.FixedSqlAction
 
 import scala.concurrent.Future
 
-case class QueryCondition(delegateAddress: String = "", owner: Option[String] = None,
+case class QueryCondition(
+    owner: Option[String] = None,
     market: Option[String] = None, status: Seq[String] = Seq(), orderHashes: Seq[String] = Seq(),
-    orderType: Option[String] = None, side: Option[String] = None)
-
-//TODO(xiaolu) will remove after project structure confirmed
-object OrderStatusDBValue extends Enumeration {
-  type OrderStatus = Value
-
-  val NEW = Value
-  val PENDING = Value
-  val EXPIRED = Value
-  val COMPLETELY_FILLED = Value // 完全成交
-  val CANCELLED_BY_USER = Value
-  val CANCELLED_LOW_BALANCE = Value
-  val CANCELLED_LOW_FEE_BALANCE = Value
-  val CANCELLED_TOO_MANY_ORDERS = Value
-  val CANCELLED_TOO_MANY_FAILED_SETTLEMENTS = Value
-}
+    orderType: Option[String] = None, side: Option[String] = None
+)
 
 trait OrdersDal extends BaseDalImpl[Orders, OrderEntity] {
   def getOrder(orderHash: String): Future[Option[OrderEntity]]
@@ -73,7 +61,7 @@ class OrdersDalImpl(val module: OrderDatabase) extends OrdersDal {
   def saveOrder(order: OrderEntity): Future[Int] = module.db.run(query += order)
 
   def getOrder(orderHash: String): Future[Option[OrderEntity]] = {
-    findByFilter(_.orderHash === orderHash).map(_.headOption)
+    findByFilter(_.hash === orderHash).map(_.headOption)
   }
 
   def getOrders(condition: QueryCondition, skip: Int, take: Int): Future[Seq[OrderEntity]] = {
@@ -105,34 +93,34 @@ class OrdersDalImpl(val module: OrderDatabase) extends OrdersDal {
     query
       .filter(_.owner === owner)
       .filter(_.market === market)
-      .filter(_.status === OrderStatusDBValue.NEW.toString)
+      .filter(_.status === OrderStatus.NEW.toString)
       .map(o ⇒ (o.status, o.updatedAt))
-      .update(OrderStatusDBValue.CANCELLED_BY_USER.toString, System.currentTimeMillis / 1000)
+      .update(OrderStatus.CANCELLED_BY_USER.toString, System.currentTimeMillis / 1000)
   }
 
   def softCancelByOwner(owner: String): FixedSqlAction[Int, NoStream, Effect.Write] = {
     query
       .filter(_.owner === owner)
-      .filter(_.status === OrderStatusDBValue.NEW.toString)
+      .filter(_.status === OrderStatus.NEW.toString)
       .map(o ⇒ (o.status, o.updatedAt))
-      .update(OrderStatusDBValue.CANCELLED_BY_USER.toString, System.currentTimeMillis / 1000)
+      .update(OrderStatus.CANCELLED_BY_USER.toString, System.currentTimeMillis / 1000)
   }
 
   def softCancelByTime(owner: String, cutoff: Long): FixedSqlAction[Int, NoStream, Effect.Write] = {
     query
       .filter(_.owner === owner)
       .filter(_.validUntil >= cutoff)
-      .filter(_.status === OrderStatusDBValue.NEW.toString)
+      .filter(_.status === OrderStatus.NEW.toString)
       .map(o ⇒ (o.status, o.updatedAt))
-      .update(OrderStatusDBValue.CANCELLED_BY_USER.toString, System.currentTimeMillis / 1000)
+      .update(OrderStatus.CANCELLED_BY_USER.toString, System.currentTimeMillis / 1000)
   }
 
   def softCancelByHash(orderHash: String): FixedSqlAction[Int, NoStream, Effect.Write] = {
     query
-      .filter(_.orderHash === orderHash)
-      .filter(_.status === OrderStatusDBValue.NEW.toString)
+      .filter(_.hash === orderHash)
+      .filter(_.status === OrderStatus.NEW.toString)
       .map(o ⇒ (o.status, o.updatedAt))
-      .update(OrderStatusDBValue.CANCELLED_BY_USER.toString, System.currentTimeMillis / 1000)
+      .update(OrderStatus.CANCELLED_BY_USER.toString, System.currentTimeMillis / 1000)
   }
 
   override def unwrapCondition(condition: QueryCondition): Query[Orders, OrderEntity, Seq] = {
@@ -151,7 +139,7 @@ class OrdersDalImpl(val module: OrderDatabase) extends OrdersDal {
         condition.market.map(o.market === _).getOrElse(true: Rep[Boolean])
       }
       .filter(_.status inSet condition.status)
-      .filter(_.orderHash inSet condition.orderHashes)
+      .filter(_.hash inSet condition.orderHashes)
       .sortBy(_.createdAt.desc)
   }
 }

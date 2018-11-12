@@ -14,21 +14,11 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.biz.database.entity
+package org.loopring.lightcone.biz.enum
 
-import org.loopring.lightcone.biz.database.base.BaseEntity
-
-case class OrderChangeLogEntity(
-    id: Long = 0,
-    updatedAt: Long = 0,
-    createdAt: Long = 0,
-    preChangeId: Long = 0,
-    orderHash: String = "",
-    dealtAmountS: String = "",
-    dealtAmountB: String = "",
-    cancelledAmountS: String = "",
-    cancelledAmountB: String = "",
-    status: String = "",
-    updatedBlock: Long = 0
-) extends BaseEntity
-
+object OrderType extends Enumeration {
+  type OrderType = Value
+  val UNKNOWN: OrderType = Value
+  val MARKET: OrderType = Value
+  val P2P: OrderType = Value
+}

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database.base
+package org.loopring.lightcone.biz.database.base
 
-import org.loopring.lightcone.lib.database.OrderDatabase
+import org.loopring.lightcone.biz.database.OrderDatabase
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.CanBeQueryCondition
 

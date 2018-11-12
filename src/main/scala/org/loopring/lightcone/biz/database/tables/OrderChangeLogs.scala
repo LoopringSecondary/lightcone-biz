@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database.tables
+package org.loopring.lightcone.biz.database.tables
 
-import org.loopring.lightcone.lib.database.base._
-import org.loopring.lightcone.lib.database.entity.OrderChangeLogEntity
+import org.loopring.lightcone.biz.database.base._
+import org.loopring.lightcone.biz.database.entity.OrderChangeLogEntity
 import slick.jdbc.MySQLProfile.api._
 
 class OrderChangeLogs(tag: Tag)

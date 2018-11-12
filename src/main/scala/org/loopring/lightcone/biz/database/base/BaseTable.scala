@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database.entity
+package org.loopring.lightcone.biz.database.base
 
-import org.loopring.lightcone.lib.database.base.BaseEntity
+import slick.jdbc.MySQLProfile.api._
+import slick.lifted.Tag
 
-case class BlockEntity(
-    id: Long,
-    updatedAt: Long,
-    createdAt: Long,
-    blockHash: String,
-    blockNumber: Long,
-    parentHash: String,
-    fork: Boolean
-) extends BaseEntity
-
+abstract class BaseTable[T](tag: Tag, name: String) extends Table[T](tag, "LC_" + name) {
+  def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+  def createdAt = column[Long]("created_at", O.Default(System.currentTimeMillis))
+  def updatedAt = column[Long]("updated_at", O.Default(System.currentTimeMillis))
+}

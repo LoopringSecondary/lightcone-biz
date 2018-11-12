@@ -14,10 +14,21 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database.base
+package org.loopring.lightcone.biz.database.entity
 
-trait BaseEntity {
-  val id: Long
-  val updatedAt: Long
-  val createdAt: Long
-}
+import org.loopring.lightcone.biz.database.base.BaseEntity
+
+case class OrderChangeLogEntity(
+    id: Long,
+    updatedAt: Long,
+    createdAt: Long,
+    preChangeId: Long,
+    orderHash: String,
+    dealtAmountS: String,
+    dealtAmountB: String,
+    cancelledAmountS: String,
+    cancelledAmountB: String,
+    status: String,
+    updatedBlock: Long
+) extends BaseEntity
+

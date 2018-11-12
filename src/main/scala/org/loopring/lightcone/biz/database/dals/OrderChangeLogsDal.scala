@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database.dals
+package org.loopring.lightcone.biz.database.dals
 
-import org.loopring.lightcone.lib.database.OrderDatabase
-import org.loopring.lightcone.lib.database.base._
-import org.loopring.lightcone.lib.database.entity.OrderChangeLogEntity
-import org.loopring.lightcone.lib.database.tables._
+import org.loopring.lightcone.biz.database.OrderDatabase
+import org.loopring.lightcone.biz.database.base._
+import org.loopring.lightcone.biz.database.entity.OrderChangeLogEntity
+import org.loopring.lightcone.biz.database.tables._
 import slick.jdbc.MySQLProfile.api._
 
 import scala.concurrent.Future

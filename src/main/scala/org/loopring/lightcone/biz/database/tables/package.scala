@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database
+package org.loopring.lightcone.biz.database
 
 import slick.jdbc.MySQLProfile.api._
 

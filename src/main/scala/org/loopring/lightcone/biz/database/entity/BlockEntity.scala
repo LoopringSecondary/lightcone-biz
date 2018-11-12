@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database.entity
+package org.loopring.lightcone.biz.database.entity
 
-import org.loopring.lightcone.lib.database.base.BaseEntity
+import org.loopring.lightcone.biz.database.base.BaseEntity
 
-case class OrderChangeLogEntity(
+case class BlockEntity(
     id: Long,
     updatedAt: Long,
     createdAt: Long,
-    preChangeId: Long,
-    orderHash: String,
-    dealtAmountS: String,
-    dealtAmountB: String,
-    cancelledAmountS: String,
-    cancelledAmountB: String,
-    status: String,
-    updatedBlock: Long
+    blockHash: String,
+    blockNumber: Long,
+    parentHash: String,
+    fork: Boolean
 ) extends BaseEntity
 

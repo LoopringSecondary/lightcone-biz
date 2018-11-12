@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database
+package org.loopring.lightcone.biz.database
 
-import org.loopring.lightcone.lib.database.dals._
+import org.loopring.lightcone.biz.database.dals._
 import org.loopring.lightcone.lib.time.TimeProvider
 import slick.basic._
 import slick.jdbc.JdbcProfile

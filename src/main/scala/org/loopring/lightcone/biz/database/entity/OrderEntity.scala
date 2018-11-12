@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database.entity
+package org.loopring.lightcone.biz.database.entity
 
-import org.loopring.lightcone.lib.database.base.BaseEntity
+import org.loopring.lightcone.biz.database.base.BaseEntity
 
 case class OrderEntity(
                       id : Long,

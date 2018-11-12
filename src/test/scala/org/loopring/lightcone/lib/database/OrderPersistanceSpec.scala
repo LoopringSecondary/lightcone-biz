@@ -1,4 +1,4 @@
-package org.loopring.lightcone.lib.database
+package org.loopring.lightcone.biz.database
 
 import org.scalatest._
 import slick.basic.DatabaseConfig

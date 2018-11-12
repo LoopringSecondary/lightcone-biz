@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.lib.database.base
+package org.loopring.lightcone.biz.database.base
 
-import slick.jdbc.MySQLProfile.api._
-import slick.lifted.Tag
-
-abstract class BaseTable[T](tag: Tag, name: String) extends Table[T](tag, "LC_" + name) {
-  def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-  def createdAt = column[Long]("created_at", O.Default(System.currentTimeMillis))
-  def updatedAt = column[Long]("updated_at", O.Default(System.currentTimeMillis))
+trait BaseEntity {
+  val id: Long
+  val updatedAt: Long
+  val createdAt: Long
 }

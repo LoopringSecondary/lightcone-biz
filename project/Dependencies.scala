@@ -8,8 +8,10 @@ object Dependencies {
     "com.github.nscala-time" %% "nscala-time" % "2.20.0",
     "net.codingwell" %% "scala-guice" % "4.2.1",
     "com.google.inject" % "guice" % "4.2.0",
-    "org.loopring" %% "lightcone-lib" % "0.1.1-SNAPSHOT"
-    )
+    "org.loopring" %% "lightcone-lib" % "0.1.1-SNAPSHOT",
+    "com.github.dozermapper" % "dozer-core" % "6.4.1"
+
+  )
 
   lazy val databaseDependency = Seq(
     "com.lightbend.akka" %% "akka-stream-alpakka-slick" % "0.20",

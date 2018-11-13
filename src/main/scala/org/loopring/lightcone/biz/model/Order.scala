@@ -17,6 +17,7 @@
 package org.loopring.lightcone.biz.model
 
 import org.loopring.lightcone.biz.enum.MarketSide.MarketSide
+import org.loopring.lightcone.biz.enum.OrderStatus
 import org.loopring.lightcone.biz.enum.OrderStatus._
 import org.loopring.lightcone.biz.enum.OrderType.OrderType
 import org.loopring.lightcone.biz.enum.SoftCancelType.SoftCancelType
@@ -26,55 +27,55 @@ case class OrderQuery(statuses: Seq[OrderStatus], owner: String, market: String,
 case class CancelOrderOption(hash: String, cutoffTime: Long, market: String, cancelType: SoftCancelType, owner: String)
 
 case class Order(
-    var rawOrder: RawOrder,
-    updatedBlock: Long,
-    dealtAmountS: String,
-    dealtAmountB: String,
-    cancelledAmountS: String,
-    cancelledAmountB: String,
-    status: OrderStatus,
-    broadcastTime: Int,
-    powNonce: Long,
-    market: String,
-    side: String,
-    price: Double,
-    orderType: String
+    var rawOrder: RawOrder = RawOrder(),
+    updatedBlock: Long = 0,
+    dealtAmountS: String = "",
+    dealtAmountB: String = "",
+    cancelledAmountS: String = "",
+    cancelledAmountB: String = "",
+    status: OrderStatus = OrderStatus.NEW,
+    broadcastTime: Int = 0,
+    powNonce: Long = 0,
+    market: String = "",
+    side: String = "",
+    price: Double = 0,
+    orderType: String = ""
 )
 
 case class RawOrder(
-    var rawOrderEssential: RawOrderEssential,
-    version: String,
-    tokenSpendableS: String,
-    tokenSpendableFee: String,
-    brokerSpendableS: String,
-    brokerSpendableFee: String,
-    sig: String,
-    dualAuthSig: String,
-    waiveFeePercentage: Int,
-    dualPrivateKey: String
+    var rawOrderEssential: RawOrderEssential = RawOrderEssential(),
+    version: String = "",
+    tokenSpendableS: String = "",
+    tokenSpendableFee: String = "",
+    brokerSpendableS: String = "",
+    brokerSpendableFee: String = "",
+    sig: String = "",
+    dualAuthSig: String = "",
+    waiveFeePercentage: Int = 0,
+    dualPrivateKey: String = ""
 )
 
 case class RawOrderEssential(
-    owner: String,
-    tokenS: String,
-    tokenB: String,
-    amountS: String,
-    amountB: String,
-    validSince: Long,
-    dualAuthAddress: String,
-    broker: String,
-    orderInterceptor: String,
-    wallet: String,
-    validUntil: Long,
-    allOrNone: Boolean,
+    owner: String = "",
+    tokenS: String = "",
+    tokenB: String = "",
+    amountS: String = "",
+    amountB: String = "",
+    validSince: Long = 0,
+    dualAuthAddress: String = "",
+    broker: String = "",
+    orderInterceptor: String = "",
+    wallet: String = "",
+    validUntil: Long = 0,
+    allOrNone: Boolean = false,
 
-    feeToken: String,
-    feeAmount: String,
-    feePercentage: Int,
-    tokenSFeePercentage: Int,
-    tokenBFeePercentage: Int,
-    tokenRecipient: String,
-    walletSplitPercentage: Int,
-    hash: String
+    feeToken: String = "",
+    feeAmount: String = "",
+    feePercentage: Int = 0,
+    tokenSFeePercentage: Int = 0,
+    tokenBFeePercentage: Int = 0,
+    tokenRecipient: String = "",
+    walletSplitPercentage: Int = 0,
+    hash: String = ""
 )
 

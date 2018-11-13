@@ -17,7 +17,7 @@
 package org.loopring.lightcone.biz.order
 
 import com.google.inject.Inject
-import org.loopring.lightcone.biz.database.{ OrderDatabase, entity, tables }
+import org.loopring.lightcone.biz.database.{ OrderDatabase, tables }
 import org.loopring.lightcone.biz.database.dals.QueryCondition
 import org.loopring.lightcone.biz.database.entity.OrderEntity
 import org.loopring.lightcone.biz.database.entity.OrderChangeLogEntity
@@ -33,7 +33,7 @@ import scala.util.{ Failure, Success }
 import scala.concurrent.duration._
 import slick.dbio.Effect.Write
 
-class OrderAccessHelperImpl @Inject() (val module: OrderDatabase) extends OrderAccessHelper {
+class OrderAccessorImpl @Inject() (val module: OrderDatabase) extends OrderAccessor {
 
   implicit val profile: JdbcProfile = module.profile
   implicit val executor: ExecutionContext = module.dbec
@@ -41,8 +41,15 @@ class OrderAccessHelperImpl @Inject() (val module: OrderDatabase) extends OrderA
   val defaultSkip = 0
   val defaultTake = 10
 
-  def mapper(order: Order): OrderEntity = ???
-  def mapperEntity(orderEntity: OrderEntity): Order = ???
+  def mapper(order: Order): OrderEntity = {
+    OrderEntity(hash = order.rawOrder.rawOrderEssential.hash, version = order.rawOrder.version, amountS = order.rawOrder.rawOrderEssential.amountS,
+      broadcastTime = order.broadcastTime)
+  }
+  def mapperEntity(orderEntity: OrderEntity): Order = {
+    val rawOrderEssential = RawOrderEssential(hash = orderEntity.hash, amountS = orderEntity.amountS)
+    val rawOrder = RawOrder(version = orderEntity.version, rawOrderEssential = rawOrderEssential)
+    Order(rawOrder, broadcastTime = orderEntity.broadcastTime)
+  }
 
   override def saveOrder(order: Order): Future[OrderSaveResult] = {
 
@@ -51,7 +58,8 @@ class OrderAccessHelperImpl @Inject() (val module: OrderDatabase) extends OrderA
     }
 
     val getOrderRst = getOrderByHash(order.rawOrder.rawOrderEssential.hash)
-    val optOrder = Await.result(getOrderRst, 1 seconds)
+    val optOrder = Await.result(getOrderRst, 10 seconds)
+    println("get order by hash result is " + optOrder)
     if (optOrder.isDefined) {
       return Future(OrderSaveResult.ORDER_EXIST)
     }
@@ -67,7 +75,7 @@ class OrderAccessHelperImpl @Inject() (val module: OrderDatabase) extends OrderA
     val withErrorHandling = a.asTry.flatMap {
       case Failure(e: Throwable) ⇒
         // print log info
-        // print(e)
+        //        println(e)
         // DBIO.failed(e)
         DBIO.successful(OrderSaveResult.SUBMIT_FAILED)
       case Success(_) ⇒ DBIO.successful(OrderSaveResult.SUBMIT_SUCCESS)

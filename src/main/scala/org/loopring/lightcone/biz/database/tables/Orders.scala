@@ -40,7 +40,7 @@ class Orders(tag: Tag) extends BaseTable[OrderEntity](tag, "ORDERS") {
   def tokenSpendableFee = column[String]("token_spendable_fee", O.SqlType("VARCHAR(64)"))
   def dualAuthAddress = column[String]("dual_auth_address", O.SqlType("VARCHAR(64)"))
 
-  def broker = column[String]("dual_auth_address", O.SqlType("VARCHAR(64)"))
+  def broker = column[String]("broker", O.SqlType("VARCHAR(64)"))
   def brokerSpendableS = column[String]("broker_spendable_s", O.SqlType("VARCHAR(64)"))
   def brokerSpendableFee = column[String]("broker_spendable_fee", O.SqlType("VARCHAR(64)"))
   def orderInterceptor = column[String]("order_interceptor", O.SqlType("VARCHAR(64)"))

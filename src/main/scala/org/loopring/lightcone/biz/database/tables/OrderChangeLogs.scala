@@ -30,7 +30,7 @@ class OrderChangeLogs(tag: Tag)
   def cancelledAmountB = column[String]("cancelled_amount_b", O.SqlType("VARCHAR(64)"))
   def splitAmountS = column[String]("split_amount_s", O.SqlType("VARCHAR(64)"))
   def splitAmountB = column[String]("split_amount_b", O.SqlType("VARCHAR(64)"))
-  def status = column[String]("status", O.SqlType("TINYINT(4)"))
+  def status = column[String]("status", O.SqlType("VARCHAR(64)"))
   def updatedBlock = column[Long]("updated_block")
   def * = (
     id,

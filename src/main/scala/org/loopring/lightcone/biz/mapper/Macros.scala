@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-package org.loopring.lightcone.biz.order
+package org.loopring.lightcone.biz.mapper
 
-import org.loopring.lightcone.biz.database.entity.OrderEntity
-import org.loopring.lightcone.biz.enum.OrderSaveResult.OrderSaveResult
-import org.loopring.lightcone.biz.model._
+import language.experimental.macros
 
-import scala.concurrent.Future
+object Macros {
 
-trait OrderAccessHelper {
-  def saveOrder(order: Order): Future[OrderSaveResult]
-  def getOrderByHash(orderHash: String): Future[Option[Order]]
-  def pageQueryOrders(optOrderQuery: Option[OrderQuery], optPage: Option[PaginationQuery]): Future[PaginationResult]
-  def softCancelOrders(cancelOrderOption: Option[CancelOrderOption]): Future[Seq[Order]]
+  def objMapper[TFrom, TTo](): ObjMapper[TFrom, TTo] = macro MacrosImpl.objMapperImpl[TFrom, TTo]
+
 }
